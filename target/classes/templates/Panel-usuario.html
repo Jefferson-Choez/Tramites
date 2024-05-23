@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Servicios</title>
+    <link rel="stylesheet" th:href="@{/css/estilos-panel.css}" type="text/css">
+</head>
+<body>
+<div class="header">
+    <div class="company-text">
+        Empresa Municipal de Agua Potable y Alcantarillado del Cantón Pedro Carbo - Empresa Pública<br>
+    </div>
+    <div class="user-info">
+        <span id="userDropdown">Bienvenido, <span th:text="${username}">Nombre de Usuario</span></span>
+        <a href="/logout" class="logout-button">Cerrar sesión</a>
+        <div id="userMenu" class="dropdown-content" style="display:none;">
+            <a href="/Actualizar-datos">Actualizar Datos</a>
+            <a href="/RestPass">Cambiar Contraseña</a>
+            <script>
+                document.getElementById('userDropdown').addEventListener('mouseenter', function() {
+                    document.getElementById('userMenu').style.display = 'block';
+                });
+                document.querySelector('.user-info').addEventListener('mouseleave', function() {
+                    document.getElementById('userMenu').style.display = 'none';
+                });
+            </script>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<h1>Servicios Generales</h1>
+<br>
+<div class="container">
+    <section class="card">
+        <h3>Registro de incidentes</h3>
+        <ul>
+            <li><a href="#">Fuga de agua en la via publica</a></li>
+            <li><a href="#">Robo de medidor</a></li>
+            <li><a href="#">Colapso en sistema de alcantarillado</a></li>
+            <li><a href="#">Anomalías en el servicio</a></li>
+        </ul>
+    </section>
+    <section class="card">
+        <h3>Solicitud de inspección</h3>
+        <ul>
+            <li><a href="#">Consumo elevado</a></li>
+            <li><a href="#">Medidor dañado</a></li>
+            <li><a href="#">Cambio de categoría</a></li>
+        </ul>
+    </section>
+    <section class="card">
+        <h3>Trámites</h3>
+        <ul>
+            <li><a href="#">Solicitud de Conexión nueva</a></li>
+            <li><a href="#">Solicitud de Cambio de nombre</a></li>
+            <li><a href="#">Solicitud de Activación del servicio</a></li>
+            <li><a href="#">Solicitud de Suspensión del servicio</a></li>
+        </ul>
+    </section>
+    <section class="card">
+        <h3>Seguimiento de trámites</h3>
+        <ul>
+            <li><a href="#">Ver estado de trámites</a></li>
+        </ul>
+    </section>
+</div>
+<footer>
+    <p>&copy; 2024 Empresa Municipal de Agua Potable y Alcantarillado del Cantón Pedro Carbo - Empresa Pública.</p>
+</footer>
+</body>
+</html>
