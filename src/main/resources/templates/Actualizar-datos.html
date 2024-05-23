@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizacion</title>
+    <link rel="stylesheet" th:href="@{/css/estilos-panel.css}" type="text/css">
+</head>
+<body>
+<div class="header">
+    <div class="company-text">
+        Empresa Municipal de Agua Potable y Alcantarillado del Cantón Pedro Carbo - Empresa Pública<br>
+    </div>
+</div>
+<div class="user-info">
+    <span id="userDropdown">Bienvenido, <span th:text="${username}">Nombre de Usuario</span></span>
+    <a href="/logout" class="logout-button">Cerrar sesión</a>
+    <div id="userMenu" class="dropdown-content" style="display:none;">
+        <a href="/Actualizar-datos">Actualizar Datos</a>
+        <a href="/RestPass">Cambiar Contraseña</a>
+        <script>
+            document.getElementById('userDropdown').addEventListener('mouseenter', function() {
+                document.getElementById('userMenu').style.display = 'block';
+            });
+            document.querySelector('.user-info').addEventListener('mouseleave', function() {
+                document.getElementById('userMenu').style.display = 'none';
+            });
+        </script>
+    </div>
+</div>
+    <h3>ACTUALIZAR DATOS</h3>
+
+<div th:if="${mensaje}" style="color: red; text-align: center">
+    <p th:text="${mensaje}"></p>
+</div>
+<div th:if="${error}" style="color: red; text-align: center">
+    <p th:text="${error}"></p>
+</div>
+<form th:action="@{/Actualizar-datos}" th:object="${usuario}" method="post" class="registration-form">
+    <label for="primerNombre">Primer Nombre:</label>
+    <input type="text" id="primerNombre" th:field="*{primerNombre}" /><br/>
+
+    <label for="segundoNombre">Segundo Nombre:</label>
+    <input type="text" id="segundoNombre" th:field="*{segundoNombre}" /><br/>
+
+    <label for="primerApellido">Primer Apellido:</label>
+    <input type="text" id="primerApellido" th:field="*{primerApellido}" /><br/>
+
+    <label for="segundoApellido">Segundo Apellido:</label>
+    <input type="text" id="segundoApellido" th:field="*{segundoApellido}" /><br/>
+
+    <label for="cedula">Cédula:</label>
+    <input type="text" id="cedula" th:field="*{cedula}" /><br/>
+
+    <label for="direction">Dirección:</label>
+    <input type="text" id="direction" th:field="*{direction}" /><br/>
+
+    <label for="parroquia">Parroquia:</label>
+    <input type="text" id="parroquia" th:field="*{parroquia}" /><br/>
+
+    <label for="telefono">Teléfono:</label>
+    <input type="text" id="telefono" th:field="*{telefono}" /><br/>
+
+    <button type="submit">Actualizar</button>
+</form>
+</body>
+</html>
