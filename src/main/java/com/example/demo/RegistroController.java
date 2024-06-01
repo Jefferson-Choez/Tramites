@@ -16,10 +16,12 @@ public class RegistroController {
 
     private final Logger logger = LoggerFactory.getLogger(RegistroController.class);
     private final UserService userService;
+    private final EmailService emailService;
 
     @Autowired
-    public RegistroController(UserService userService) {
+    public RegistroController(UserService userService, EmailService emailService) {
         this.userService = userService;
+        this.emailService = emailService;
     }
 
     @GetMapping
@@ -49,11 +51,18 @@ public class RegistroController {
             model.addAttribute("error", resultado);
             return "Registro";
         }
-            return "redirect:/Registro-exitoso";
-        }
+
+        emailService.sendRegistroNotificationEmail(usuario);
+        return "redirect:/Registro/Registro-exitoso";
+    }
 
     @GetMapping("/Registro-exitoso")
     public String registroExitoso() {
         return "Registro-exitoso";
+    }
+
+    @GetMapping("/Politica-privacidad")
+    public String mostrarPoliticaPrivacidad() {
+        return "Politica-privacidad";
     }
 }

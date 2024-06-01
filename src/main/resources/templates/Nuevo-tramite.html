@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Servicios</title>
+    <title>Nuevo Trámite</title>
     <link rel="stylesheet" th:href="@{/css/estilos-panel.css}" type="text/css">
 </head>
 <body>
@@ -16,49 +16,32 @@
         <div id="userMenu" class="dropdown-content" style="display:none;">
             <a href="/Actualizar-datos">Actualizar Datos</a>
             <a href="/RestPass">Cambiar Contraseña</a>
-            <script>
-                document.getElementById('userDropdown').addEventListener('mouseenter', function() {
-                    document.getElementById('userMenu').style.display = 'block';
-                });
-                document.querySelector('.user-info').addEventListener('mouseleave', function() {
-                    document.getElementById('userMenu').style.display = 'none';
-                });
-            </script>
         </div>
     </div>
 </div>
 
-<form action="/tramites/guardar" method="post" enctype="multipart/form-data">
+<script>
+    document.getElementById('userDropdown').addEventListener('mouseenter', function() {
+        document.getElementById('userMenu').style.display = 'block';
+    });
+    document.querySelector('.user-info').addEventListener('mouseleave', function() {
+        document.getElementById('userMenu').style.display = 'none';
+    });
+</script>
+
+<h3>Nuevo Trámite</h3>
+
+<form th:action="@{/tramites/nuevo}" th:object="${tramite}" method="post" enctype="multipart/form-data">
     <label for="tipo">Tipo de Trámite:</label>
-    <input type="text" id="tipo" name="tipo" required>
+    <input type="text" id="tipo" name="tipo" th:field="*{tipo}" required>
 
     <label for="descripcion">Descripción:</label>
-    <textarea id="descripcion" name="descripcion" required></textarea>
+    <textarea id="descripcion" name="descripcion" th:field="*{descripcion}" required></textarea>
 
     <label for="archivos">Subir Archivos:</label>
     <input type="file" id="archivos" name="archivos" multiple required>
 
-    <button type="submit">Guardar Trámite</button>
+    <button type="submit">Guardar</button>
 </form>
-
-<!-- lista-tramites.html -->
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Tipo</th>
-        <th>Descripción</th>
-        <th>Estado</th>
-        <th>Fecha de Creación</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="tramite : ${tramites}">
-        <td th:text="${tramite.id}"></td>
-        <td th:text="${tramite.tipo}"></td>
-        <td th:text="${tramite.descripcion}"></td>
-        <td th:text="${tramite.estado}"></td>
-        <td th:text="${tramite.fechaCreacion}"></td>
-    </tr>
-    </tbody>
-</table>
+</body>
+</html>

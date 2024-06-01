@@ -2,12 +2,12 @@ package com.example.demo;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 @Controller
 @Transactional
@@ -30,6 +30,7 @@ public class ActualizaDatos {
 
             if (usuario != null) {
                 model.addAttribute("usuario", usuario);
+                model.addAttribute("username", email);
             }
         }
         return "Actualizar-datos";
@@ -42,6 +43,7 @@ public class ActualizaDatos {
             if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
                 String email = ((CustomUserDetails) authentication.getPrincipal()).getEmail();
                 usuario.setEmail(email);
+                model.addAttribute("username", email);
             }
 
             userService.actualizarUsuario(usuario);

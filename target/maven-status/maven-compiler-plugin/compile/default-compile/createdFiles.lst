@@ -6,6 +6,7 @@ com\example\demo\RegistroController.class
 com\example\demo\EmailService.class
 com\example\demo\ZonedDateTimeConverter.class
 com\example\demo\Archivo.class
+com\example\demo\Usuario$NuevoRegistro.class
 com\example\demo\Tramite.class
 com\example\demo\aplicacion.class
 com\example\demo\SecurityConfig.class

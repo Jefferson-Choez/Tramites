@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Servicios</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar datos</title>
     <link rel="stylesheet" th:href="@{/css/estilos-panel.css}" type="text/css">
 </head>
 <body>
@@ -16,17 +17,18 @@
         <div id="userMenu" class="dropdown-content" style="display:none;">
             <a href="/Actualizar-datos">Actualizar Datos</a>
             <a href="/RestPass">Cambiar Contraseña</a>
-            <script>
-                document.getElementById('userDropdown').addEventListener('mouseenter', function() {
-                    document.getElementById('userMenu').style.display = 'block';
-                });
-                document.querySelector('.user-info').addEventListener('mouseleave', function() {
-                    document.getElementById('userMenu').style.display = 'none';
-                });
-            </script>
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('userDropdown').addEventListener('mouseenter', function() {
+        document.getElementById('userMenu').style.display = 'block';
+    });
+    document.querySelector('.user-info').addEventListener('mouseleave', function() {
+        document.getElementById('userMenu').style.display = 'none';
+    });
+</script>
 <table>
     <thead>
     <tr>
@@ -47,3 +49,5 @@
     </tr>
     </tbody>
 </table>
+</body>
+</html>

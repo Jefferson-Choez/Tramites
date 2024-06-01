@@ -27,8 +27,9 @@ public class SecurityConfig {
                 http
                         .authorizeHttpRequests(auth -> auth
                                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-                                .requestMatchers("/Login", "/Registro", "/RecPass", "/RestPass", "Panel-usuario",
-                                        "Actualizar-datos").permitAll()
+                                .requestMatchers("/Login", "/Registro", "/RecPass", "/RestPass",
+                                        "/Registro/Politica-privacidad", "/Registro/Registro-exitoso", "/tramites/nuevo",
+                                        "/tramites/lista").permitAll()
                                 .anyRequest().authenticated())
                         .formLogin(form -> form
                                 .loginPage("/Login")

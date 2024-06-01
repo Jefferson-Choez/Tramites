@@ -3,6 +3,7 @@ package com.example.demo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.groups.Default;
 
@@ -71,4 +72,9 @@ public class Usuario {
     @Transient
     private String confirmPass;
 
+    @NotNull(message = "Debe aceptar la política de privacidad.", groups = NuevoRegistro.class)
+    @Column(nullable = true)
+    private Boolean consent;
+
+    public interface NuevoRegistro {}
 }
