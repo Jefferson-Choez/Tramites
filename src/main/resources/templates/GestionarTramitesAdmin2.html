@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Trámites</title>
+    <link rel="stylesheet" th:href="@{/css/estilos-panel.css}" type="text/css">
+</head>
+<body>
+<div class="header">
+    <div class="company-text">
+        Empresa Municipal de Agua Potable y Alcantarillado del Cantón Pedro Carbo - Empresa Pública<br>
+    </div>
+    <div class="user-info">
+        <span id="userDropdown">Bienvenido, <span th:text="${username}">Nombre de Usuario</span></span>
+        <a href="/logout" class="logout-button">Cerrar sesión</a>
+        <div id="userMenu" class="dropdown-content" style="display:none;">
+            <a href="/Actualizar-datos">Actualizar Datos</a>
+            <a href="/RestPass">Cambiar Contraseña</a>
+            <a href="/Roles">Modificar roles</a>
+        </div>
+        <script>
+            document.getElementById('userDropdown').addEventListener('mouseenter', function() {
+                document.getElementById('userMenu').style.display = 'block';
+            });
+            document.querySelector('.user-info').addEventListener('mouseleave', function() {
+                document.getElementById('userMenu').style.display = 'none';
+            });
+        </script>
+    </div>
+</div>
+<br>
+<button class="logout-button" onclick="history.back()">Regresar</button>
+<br>
+<h3>Gestionar Trámites</h3>
+<div class="filtro-tramites">
+    <form th:action="@{/GestionarTramitesAdmin2}" method="get">
+        <label for="filtro">Ver por:</label>
+        <select id="filtro" name="filtro" onchange="this.form.submit()">
+            <option value="">Seleccionar</option>
+            <option value="estado" th:selected="${filtro == 'estado'}">Estado</option>
+            <option value="departamento" th:selected="${filtro == 'departamento'}">Area asignada</option>
+            <option value="cedula" th:selected="${filtro == 'cedula'}">Búsqueda por cédula</option>
+        </select>
+
+        <div th:if="${filtro == 'estado'}">
+            <label for="valorEstado">Estado:</label>
+            <select id="valorEstado" name="valor" onchange="this.form.submit()">
+                <option value="">Seleccionar</option>
+                <option value="Registrado" th:selected="${valor == 'Registrado'}">Registrado</option>
+                <option value="En Transición" th:selected="${valor == 'En Transición'}">En Transición</option>
+                <option value="Cerrado" th:selected="${valor == 'Cerrado'}">Cerrado</option>
+            </select>
+        </div>
+
+        <div th:if="${filtro == 'departamento'}">
+            <label for="valorDepartamento">Departamento:</label>
+            <select id="valorDepartamento" name="valor" onchange="this.form.submit()">
+                <option value="">Seleccionar</option>
+                <option value="Gerencia General" th:selected="${valor == 'Gerencia General'}">Gerencia General</option>
+                <option value="CAF" th:selected="${valor == 'CAF'}">CAF</option>
+                <option value="CSRI" th:selected="${valor == 'CSRI'}">CSRI</option>
+                <option value="CTRAYA" th:selected="${valor == 'CTRAYA'}">CTRAYA</option>
+                <option value="JP" th:selected="${valor == 'JP'}">JP</option>
+                <option value="Rentas" th:selected="${valor == 'Rentas'}">Rentas</option>
+                <option value="Tesorería" th:selected="${valor == 'Tesorería'}">Tesorería</option>
+            </select>
+        </div>
+
+        <div th:if="${filtro == 'cedula'}">
+            <label for="valorCedula">Cédula:</label>
+            <input type="text" id="valorCedula" name="valor" th:value="${valor}" placeholder="Ingrese número de cédula" onchange="this.form.submit()">
+        </div>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>CEDULA</th>
+        <th>USUARIO</th>
+        <th>TIPO DE TRAMITE</th>
+        <th>NOMBRE DEL TRAMITE</th>
+        <th>FECHA DE REGISTRO</th>
+        <th>ESTADO</th>
+        <th>AREA ASIGNADA</th>
+        <th>VER TRAMITE</th>
+        <th>HISTORIAL DE EVENTOS</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="tramite : ${tramites}">
+        <td th:text="${tramite.usuario.cedula}"></td>
+        <td th:text="${tramite.usuario.primerNombre + ' ' + tramite.usuario.segundoNombre + ' ' + tramite.usuario.primerApellido + ' ' + tramite.usuario.segundoApellido}"></td>
+        <td th:text="${tramite.tipo}"></td>
+        <td th:text="${tramite.subtipo}"></td>
+        <td th:text="${tramite.fechaCreacion}"></td>
+        <td th:text="${tramite.estado}"></td>
+        <td th:text="${tramite.departamento}"></td>
+        <td><a th:href="@{/DetalleTramite/{id}(id=${tramite.id})}">Ver Trámite</a></td>
+        <td><a th:href="@{/DetalleEventos/{id}(id=${tramite.id})}">Ver</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="pagination">
+    <span th:if="${tramites.hasPrevious()}">
+        <a th:href="@{|/GestionarTramites?page=${tramites.number - 1}&filtro=${filtro}&valor=${valor}|}">&laquo; Anterior</a>
+    </span>
+    <span th:if="${tramites.hasNext()}">
+        <a th:href="@{|/GestionarTramites?page=${tramites.number + 1}&filtro=${filtro}&valor=${valor}|}">Siguiente &raquo;</a>
+    </span>
+</div>
+<script>
+    document.getElementById('backButton').addEventListener('click', function() {
+        history.back();
+        setTimeout(function() {
+            location.reload();
+        }, 100);
+    });
+</script>
+<footer>
+    <p>&copy; 2024 Empresa Municipal de Agua Potable y Alcantarillado.</p>
+</footer>
+</body>
+</html>

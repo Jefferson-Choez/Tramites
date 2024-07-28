@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Trámite</title>
+    <link rel="stylesheet" th:href="@{/css/estilos-panel.css}" type="text/css">
+</head>
+<body>
+<div class="header">
+    <div class="company-text">
+        Empresa Municipal de Agua Potable y Alcantarillado del Cantón Pedro Carbo - Empresa Pública<br>
+    </div>
+    <div class="user-info">
+        <span id="userDropdown">Bienvenido, <span th:text="${username}">Nombre de Usuario</span></span>
+        <a th:href="@{/logout}" class="logout-button">Cerrar sesión</a>
+
+        <div id="userMenu" class="dropdown-content" style="display:none;">
+            <a href="/Actualizar-datos">Actualizar Datos</a>
+            <a href="/RestPass">Cambiar Contraseña</a>
+            <a href="/Roles">Modificar Roles</a>
+        </div>
+        <script>
+            document.getElementById('userDropdown').addEventListener('mouseenter', function() {
+                document.getElementById('userMenu').style.display = 'block';
+            });
+            document.querySelector('.user-info').addEventListener('mouseleave', function() {
+                document.getElementById('userMenu').style.display = 'none';
+            });
+        </script>
+    </div>
+</div>
+<br>
+<button class="logout-button" onclick="history.back()">Regresar</button>
+<br>
+<div class="detalle-tramite-container">
+    <h3>Detalle del Trámite</h3>
+    <table class="table">
+        <tr>
+            <th>Cédula del Usuario:</th>
+            <td th:text="${tramite.usuario.cedula}"></td>
+        </tr>
+        <tr>
+            <th>Nombre del Usuario:</th>
+            <td th:text="${tramite.usuario.primerNombre + ' ' + tramite.usuario.segundoNombre + ' ' + tramite.usuario.primerApellido + ' ' + tramite.usuario.segundoApellido}"></td>
+        </tr>
+        <tr>
+            <th>Tipo de Trámite:</th>
+            <td th:text="${tramite.tipo}"></td>
+        </tr>
+        <tr>
+            <th>Nombre del Trámite:</th>
+            <td th:text="${tramite.subtipo}"></td>
+        </tr>
+        <tr>
+            <th>Fecha de Registro:</th>
+            <td th:text="${tramite.fechaCreacion}"></td>
+        </tr>
+        <tr>
+            <th>Estado:</th>
+            <td>
+                <form th:action="@{/CambiarEstado}" method="post" class="form-inline">
+                    <input type="hidden" name="idTramite" th:value="${tramite.id}">
+                    <label for="estado">Cambiar Estado:</label>
+                    <select name="estado" id="estado">
+                        <option value="" th:selected="${tramite.estado == ''}">Seleccionar</option>
+                        <option value="Ingresado" th:selected="${tramite.estado == 'Ingresado'}">Ingresado</option>
+                        <option value="En Transición" th:selected="${tramite.estado == 'En Transición'}">En Transición</option>
+                        <option value="Cerrado" th:selected="${tramite.estado == 'Cerrado'}">Cerrado</option>
+                    </select>
+                    <button type="submit">Cambiar Estado</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <th>Área Asignada:</th>
+            <td>
+                <form th:action="@{/AsignarArea}" method="post" class="form-inline">
+                    <input type="hidden" name="idTramite" th:value="${tramite.id}">
+                    <label for="area">Asignar Área:</label>
+                    <select name="area" id="area">
+                        <option value="" th:selected="${tramite.departamento == ''}">Seleccionar</option>
+                        <option value="Gerencia General" th:selected="${tramite.departamento == 'Gerencia General'}">Gerencia General</option>
+                        <option value="CAF" th:selected="${tramite.departamento == 'CAF'}">CAF</option>
+                        <option value="CSRI" th:selected="${tramite.departamento == 'CSRI'}">CSRI</option>
+                        <option value="CTRAYA" th:selected="${tramite.departamento == 'CTRAYA'}">CTRAYA</option>
+                        <option value="Rentas" th:selected="${tramite.departamento == 'Rentas'}">Rentas</option>
+                        <option value="Tesorería" th:selected="${tramite.departamento == 'Tesorería'}">Tesorería</option>
+                    </select>
+                    <button type="submit">Asignar Área</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <th>Descripción:</th>
+            <td th:text="${tramite.descripcion}"></td>
+        </tr>
+    </table>
+</div>
+<div class="comentarios-container">
+    <h3>Historial de Comentarios</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Departamento</th>
+            <th>Correo Electrónico</th>
+            <th>Fecha del Comentario</th>
+            <th>Comentario</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comentario : ${comentarios}">
+            <td th:text="${comentario.usuario.primerNombre + ' ' + comentario.usuario.primerApellido}"></td>
+            <td th:text="${comentario.usuario.departamento}"></td>
+            <td th:text="${comentario.usuario.email}"></td>
+            <td th:text="${comentario.fechaCreacion}"></td>
+            <td th:text="${comentario.texto}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="form-container">
+    <form th:action="@{/AgregarComentario}" method="post">
+        <input type="hidden" name="idTramite" th:value="${tramite.id}">
+        <label for="comentario">Agregar Comentario:</label>
+        <textarea name="comentario" id="comentario" placeholder="Agregar comentario"></textarea>
+        <button type="submit">Agregar Comentario</button>
+    </form>
+</div>
+<script>
+    document.getElementById('backButton').addEventListener('click', function() {
+        history.back();
+        setTimeout(function() {
+            location.reload();
+        }, 100);
+    });
+</script>
+</body>
+</html>

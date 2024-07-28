@@ -16,10 +16,12 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
         private final UserDetailsService userDetailsService;
+        private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
         @Autowired
-        public SecurityConfig(UserDetailsService userDetailsService) {
+        public SecurityConfig(UserDetailsService userDetailsService, CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
                 this.userDetailsService = userDetailsService;
+                this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
         }
 
         @Bean
@@ -28,23 +30,27 @@ public class SecurityConfig {
                         .authorizeHttpRequests(auth -> auth
                                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                                 .requestMatchers("/Login", "/Registro", "/RecPass", "/RestPass",
-                                        "/Registro/Politica-privacidad", "/Registro/Registro-exitoso", "/tramites/nuevo",
-                                        "/tramites/lista").permitAll()
+                                        "/Politica-privacidad", "/Registro/Registro-exitoso", "/robots.txt").permitAll()
+                                .requestMatchers("/Panel-usuario").hasRole("USER")
+                                .requestMatchers("/Panel-gestion").hasRole("Admin1")
+                                .requestMatchers("/Panel-admin").hasRole("Admin2")
+                                .requestMatchers("/Roles").hasRole("Admin2")
+                                .requestMatchers("/Reportes/**").hasAnyRole("Admin1", "Admin2")
                                 .anyRequest().authenticated())
                         .formLogin(form -> form
-                                .loginPage("/Login")
-                                .defaultSuccessUrl("/Panel-usuario", true)
-                                .permitAll())
-                        .logout(logout -> logout.permitAll())
-                        .csrf(csrf -> csrf.disable());
-
+                                .loginPage("/Login")// especifica la pagina de inicio de sesion
+                                .successHandler(customAuthenticationSuccessHandler)//maneja direcciones despues del is
+                                .permitAll())//permite el acceso sin autenticacion
+                        .logout(logout -> logout//cierre de sesion
+                                .logoutUrl("/logout")
+                                .logoutSuccessUrl("/Login?logout")
+                                .permitAll());
                 return http.build();
         }
 
         @Bean
-        public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-                AuthenticationManagerBuilder authenticationManagerBuilder =
-                        http.getSharedObject(AuthenticationManagerBuilder.class);
+        public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {//carga detalles del usuario
+                AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
                 authenticationManagerBuilder
                         .userDetailsService(userDetailsService)
                         .passwordEncoder(passwordEncoder());
@@ -52,7 +58,7 @@ public class SecurityConfig {
         }
 
         @Bean
-        public BCryptPasswordEncoder passwordEncoder() {
+        public BCryptPasswordEncoder passwordEncoder() {//codifica las contraseñas
                 return new BCryptPasswordEncoder();
         }
 }

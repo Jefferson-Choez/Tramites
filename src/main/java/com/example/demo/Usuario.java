@@ -6,9 +6,10 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.groups.Default;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -25,42 +26,42 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_seq")
     @SequenceGenerator(name = "usuario_seq", sequenceName = "USUARIO_SEQ", allocationSize = 1)
-    private Long ID;
+    private Long id;
 
-    @NotEmpty(groups = {Registro.class, Default.class},message = "El primer nombre no puede estar vacío.")
+    @NotEmpty(groups = {Registro.class, Default.class}, message = "El primer nombre no puede estar vacío.")
     @Column(name = "PRIMER_NOMBRE")
     private String primerNombre;
 
-    @NotEmpty(groups = {Registro.class, Default.class},message = "El segundo nombre no puede estar vacío.")
+    @NotEmpty(groups = {Registro.class, Default.class}, message = "El segundo nombre no puede estar vacío.")
     @Column(name = "SEGUNDO_NOMBRE")
     private String segundoNombre;
 
-    @NotEmpty(groups = {Registro.class, Default.class},message = "El primer apellido no puede estar vacío.")
+    @NotEmpty(groups = {Registro.class, Default.class}, message = "El primer apellido no puede estar vacío.")
     @Column(name = "PRIMER_APELLIDO")
     private String primerApellido;
 
-    @NotEmpty(groups = {Registro.class, Default.class},message = "El segundo apellido no puede estar vacío.")
+    @NotEmpty(groups = {Registro.class, Default.class}, message = "El segundo apellido no puede estar vacío.")
     @Column(name = "SEGUNDO_APELLIDO")
     private String segundoApellido;
 
-    @NotEmpty(groups = {Registro.class, Default.class},message = "La cedula no puede estar vacía.")
-    @Column(name = "CEDULA")
+    @NotEmpty(groups = {Registro.class, Default.class}, message = "La cédula no puede estar vacía.")
+    @Column(name = "CEDULA", unique = true)
     private String cedula;
 
-    @NotEmpty(groups = {Registro.class, Default.class},message = "La direccion no puede estar vacía.")
-    @Column(name = "DIRECTION")
+    @NotEmpty(groups = {Registro.class, Default.class}, message = "La dirección no puede estar vacía.")
+    @Column(name = "DIRECCION")
     private String direction;
 
-    @NotEmpty(groups = {Registro.class, Default.class},message = "La parroquia no puede estar vacía.")
+    @NotEmpty(groups = {Registro.class, Default.class}, message = "La parroquia no puede estar vacía.")
     @Column(name = "PARROQUIA")
     private String parroquia;
 
-    @NotEmpty(groups = {Registro.class, Default.class},message = "El correo electrónico no puede estar vacío.")
-    @Email(groups = {Registro.class, Default.class},message = "Correo electrónico no válido.")
+    @NotEmpty(groups = {Registro.class, Default.class}, message = "El correo electrónico no puede estar vacío.")
+    @Email(groups = {Registro.class, Default.class}, message = "Correo electrónico no válido.")
     @Column(name = "EMAIL", unique = true)
     private String email;
 
-    @NotEmpty(groups = {Registro.class, Default.class},message = "El telefono no puede estar vacío.")
+    @NotEmpty(groups = {Registro.class, Default.class}, message = "El teléfono no puede estar vacío.")
     @Column(name = "TELEFONO")
     private String telefono;
 
@@ -69,6 +70,15 @@ public class Usuario {
     @Column(name = "PASSWORD")
     private String password;
 
+    @Column(name = "ROL")
+    private String rol;
+
+    @Column(name = "DEPARTAMENTO")
+    private String departamento;
+
+    @Column(name = "FECHA_REGISTRO")
+    private LocalDate fechaRegistro;
+
     @Transient
     private String confirmPass;
 
@@ -76,5 +86,8 @@ public class Usuario {
     @Column(nullable = true)
     private Boolean consent;
 
+    public Usuario() {}
+
     public interface NuevoRegistro {}
 }
+

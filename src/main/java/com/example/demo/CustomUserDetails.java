@@ -16,9 +16,13 @@ public class CustomUserDetails extends User {
     private final String parroquia;
     private final String email;
     private final String telefono;
+    private final String rol;
+    private final String departamento;
 
     public CustomUserDetails(String userName, String password, String primerNombre, String segundoNombre, String primerApellido,
                              String segundoApellido, String cedula, String direction, String parroquia, String email, String telefono,
+                             String rol, String departamento,
+
                              Collection<? extends GrantedAuthority> authorities) {
         super(userName, password, authorities);
         this.primerNombre = primerNombre;
@@ -30,5 +34,7 @@ public class CustomUserDetails extends User {
         this.parroquia = parroquia;
         this.email = email;
         this.telefono = telefono;
+        this.rol = rol;
+        this.departamento = departamento;
     }
 }

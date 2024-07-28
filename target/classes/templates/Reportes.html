@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Reportes</title>
+    <link rel="stylesheet" th:href="@{/css/estilos-panel.css}" type="text/css">
+</head>
+<body>
+<div class="header">
+    <div class="company-text">
+        Empresa Municipal de Agua Potable y Alcantarillado del Cantón Pedro Carbo - Empresa Pública<br>
+    </div>
+    <div class="user-info">
+        <span id="userDropdown">Bienvenido, <span th:text="${username}">Nombre de Usuario</span></span>
+        <a href="/logout" class="logout-button">Cerrar sesión</a>
+        <div id="userMenu" class="dropdown-content" style="display:none;">
+            <a href="/Actualizar-datos">Actualizar Datos</a>
+            <a href="/RestPass">Cambiar Contraseña</a>
+            <a href="/Roles">Modificar Roles</a>
+        </div>
+        <script>
+            document.getElementById('userDropdown').addEventListener('mouseenter', function() {
+                document.getElementById('userMenu').style.display = 'block';
+            });
+            document.querySelector('.user-info').addEventListener('mouseleave', function() {
+                document.getElementById('userMenu').style.display = 'none';
+            });
+        </script>
+    </div>
+</div>
+<br>
+<button class="logout-button" onclick="history.back()">Regresar</button>
+<br>
+<h1>Generar Reportes</h1>
+<br>
+<div class="form-container">
+    <div class="reporte-card">
+        <h2>Reporte de Usuarios</h2>
+        <form th:action="@{/Reportes/usuarios}" method="post">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <label for="tipoReporteUsuarios">Tipo de reporte de usuarios:</label>
+            <select id="tipoReporteUsuarios" name="tipoReporteUsuarios">
+                <option value="">Seleccione</option>
+                <option value="Todos">Todos</option>
+                <option value="Por Rango de Fechas">Por Rango de Fechas</option>
+            </select>
+            <div id="fechaUsuarios" style="display:none;">
+                <label for="fechaInicioUsuarios">Fecha Inicio:</label>
+                <input type="date" id="fechaInicioUsuarios" name="fechaInicioUsuarios">
+                <label for="fechaFinUsuarios">Fecha Fin:</label>
+                <input type="date" id="fechaFinUsuarios" name="fechaFinUsuarios">
+            </div>
+            <label for="formatoUsuarios">Seleccione el formato del reporte:</label>
+            <select id="formatoUsuarios" name="formato">
+                <option value="">Seleccione</option>
+                <option value="PDF">PDF</option>
+                <option value="TXT">TXT</option>
+            </select>
+            <button type="submit">Generar Reporte</button>
+        </form>
+    </div>
+
+    <div class="reporte-card">
+        <h2>Reporte de Trámites</h2>
+        <form th:action="@{/Reportes/tramites}" method="post">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <label for="tipoReporteTramites">Tipo de reporte de trámites:</label>
+            <select id="tipoReporteTramites" name="tipoReporteTramites">
+                <option value="">Seleccione</option>
+                <option value="Todos">Todos</option>
+                <option value="Por Estado">Por Estado</option>
+                <option value="Por Rango de Fechas">Por Rango de Fechas</option>
+            </select>
+            <div id="estadoTramites" style="display:none;">
+                <label for="estado">Seleccione el estado:</label>
+                <select id="estado" name="estado">
+                    <option value="">Seleccione</option>
+                    <option value="Registrado">Registrado</option>
+                    <option value="En Transición">En Transición</option>
+                    <option value="Cerrado">Cerrado</option>
+                </select>
+            </div>
+            <div id="fechaTramites" style="display:none;">
+                <label for="fechaInicioTramites">Fecha Inicio:</label>
+                <input type="date" id="fechaInicioTramites" name="fechaInicioTramites">
+                <label for="fechaFinTramites">Fecha Fin:</label>
+                <input type="date" id="fechaFinTramites" name="fechaFinTramites">
+            </div>
+            <label for="formatoTramites">Seleccione el formato del reporte:</label>
+            <select id="formatoTramites" name="formato">
+                <option value="">Seleccione</option>
+                <option value="PDF">PDF</option>
+                <option value="TXT">TXT</option>
+            </select>
+            <button type="submit">Generar Reporte</button>
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById('tipoReporteUsuarios').addEventListener('change', function () {
+        let tipoReporteUsuarios = this.value;
+        document.getElementById('fechaUsuarios').style.display = tipoReporteUsuarios === 'Por Rango de Fechas' ? 'block' : 'none';
+    });
+
+    document.getElementById('tipoReporteTramites').addEventListener('change', function () {
+        let tipoReporteTramites = this.value;
+        document.getElementById('estadoTramites').style.display = tipoReporteTramites === 'Por Estado' ? 'block' : 'none';
+        document.getElementById('fechaTramites').style.display = tipoReporteTramites === 'Por Rango de Fechas' ? 'block' : 'none';
+    });
+</script>
+<script>
+    document.getElementById('backButton').addEventListener('click', function() {
+        history.back();
+        setTimeout(function() {
+            location.reload();
+        }, 100);
+    });
+</script>
+</body>
+</html>

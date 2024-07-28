@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Trámite</title>
+    <link rel="stylesheet" th:href="@{/css/estilos-panel.css}" type="text/css">
+    <script>
+        function mostrarFormulario() {
+            let seleccion = document.getElementById('tipoTramite').value;
+            let formularios = document.getElementsByClassName('formulario-tramite');
+            for (let i = 0; i < formularios.length; i++) {
+                formularios[i].style.display = 'none';
+            }
+            if (seleccion) {
+                document.getElementById('form-' + seleccion).style.display = 'block';
+                if (seleccion === 'reporteIncidente') {
+                    document.getElementById('subtipoTramiteReporte').style.display = 'block';
+                    document.getElementById('subtipoTramiteSolicitudes').style.display = 'none';
+                } else if (seleccion === 'solicitudesVarias') {
+                    document.getElementById('subtipoTramiteSolicitudes').style.display = 'block';
+                    document.getElementById('subtipoTramiteReporte').style.display = 'none';
+                }
+            } else {
+                document.getElementById('subtipoTramiteReporte').style.display = 'none';
+                document.getElementById('subtipoTramiteSolicitudes').style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="header">
+    <div class="company-text">
+        Empresa Municipal de Agua Potable y Alcantarillado del Cantón Pedro Carbo - Empresa Pública<br>
+    </div>
+    <div class="user-info">
+        <span id="userDropdown">Bienvenido, <span th:text="${username}">Nombre de Usuario</span></span>
+        <a href="/logout" class="logout-button">Cerrar sesión</a>
+        <div id="userMenu" class="dropdown-content" style="display:none;">
+            <a href="/Actualizar-datos">Actualizar Datos</a>
+            <a href="/RestPass">Cambiar Contraseña</a>
+        </div>
+    </div>
+</div>
+<br>
+<button class="logout-button" onclick="history.back()">Regresar</button>
+<br>
+<h3>NUEVO TRÁMITE</h3>
+
+<div class="tramite-form-container">
+    <form th:action="@{/NuevoTramite}" th:object="${tramite}" method="post">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+
+        <label for="tipoTramite">Seleccione el tipo de trámite:</label>
+        <select id="tipoTramite" name="tipoTramite" onchange="mostrarFormulario()">
+            <option value="">Seleccione...</option>
+            <option value="reporteIncidente">Reporte de Incidente</option>
+            <option value="solicitudesVarias">Solicitudes Varias</option>
+        </select>
+    </form>
+
+        <div id="form-reporteIncidente" class="formulario-tramite" style="display:none;">
+            <form th:action="@{/NuevoTramite}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <input type="hidden" name="tipoTramite" value="reporteIncidente">
+                <label for="subtipoTramite">Seleccione el tipo de incidente:</label>
+                <select id="subtipoTramite" name="subtipoTramite">
+                    <option value="">Seleccione...</option>
+                    <option value="fugaAguaViaPublica">Fuga de agua en la vía pública</option>
+                    <option value="fugaAguaMedidor">Fuga de agua en el medidor</option>
+                    <option value="roboMedidor">Robo de medidor</option>
+                    <option value="faltaPresion">Falta de presión de agua</option>
+                    <option value="alcantarillado">Reporte de alcantarillado</option>
+                </select>
+                <label for="descripcion-reporteIncidente">Descripción:</label>
+                <textarea id="descripcion-reporteIncidente" name="descripcion" required></textarea>
+                <input type="submit" value="Guardar">
+            </form>
+        </div>
+
+        <div id="form-solicitudesVarias" class="formulario-tramite" style="display:none;">
+            <form th:action="@{/NuevoTramite}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <input type="hidden" name="tipoTramite" value="solicitudesVarias">
+                <label for="subtipoSolicitud">Seleccione el tipo de solicitud:</label>
+                <select id="subtipoSolicitud" name="subtipoTramite">
+                    <option value="">Seleccione...</option>
+                    <option value="activacionServicio">Activación del servicio</option>
+                    <option value="suspensionServicio">Suspensión del servicio</option>
+                    <option value="cambioNombreServicio">Cambio de nombre del servicio</option>
+                    <option value="inspeccionCategoria">Solicitud de inspección por categoría</option>
+                    <option value="inspeccionConsumosElevados">Inspección por consumos elevados</option>
+                </select>
+                <label for="descripcion-solicitudesVarias">Descripción:</label>
+                <textarea id="descripcion-solicitudesVarias" name="descripcion" required></textarea>
+                <input type="submit" value="Guardar">
+            </form>
+        </div>
+</div>
+<script>
+    document.getElementById('backButton').addEventListener('click', function() {
+        history.back();
+        setTimeout(function() {
+            location.reload();
+        }, 100);
+    });
+</script>
+        <footer>
+            <p>&copy; 2024 Empresa Municipal de Agua Potable y Alcantarillado.</p>
+        </footer>
+        </body>
+</html>

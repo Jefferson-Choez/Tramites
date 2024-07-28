@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Eventos</title>
+    <link rel="stylesheet" th:href="@{/css/estilos-panel.css}" type="text/css">
+</head>
+<body>
+<div class="header">
+    <div class="company-text">
+        Empresa Municipal de Agua Potable y Alcantarillado del Cantón Pedro Carbo - Empresa Pública<br>
+    </div>
+    <div class="user-info">
+        <span id="userDropdown">Bienvenido, <span th:text="${username}">Nombre de Usuario</span></span>
+        <a href="/logout" class="logout-button">Cerrar sesión</a>
+        <div id="userMenu" class="dropdown-content" style="display:none;">
+            <a href="/Actualizar-datos">Actualizar Datos</a>
+            <a href="/RestPass">Cambiar Contraseña</a>
+            <a href="/Roles">Modificar roles</a>
+        </div>
+        <script>
+            document.getElementById('userDropdown').addEventListener('mouseenter', function() {
+                document.getElementById('userMenu').style.display = 'block';
+            });
+            document.querySelector('.user-info').addEventListener('mouseleave', function() {
+                document.getElementById('userMenu').style.display = 'none';
+            });
+        </script>
+    </div>
+</div>
+<br>
+<button class="logout-button" onclick="history.back()">Regresar</button>
+<br>
+<br>
+<h3 th:text="'Detalle de Eventos para el Trámite ' + ${tramite.id}"></h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Nro</th>
+        <th>USUARIO</th>
+        <th>DEPARTAMENTO</th>
+        <th>TIPO DE EVENTO</th>
+        <th>DESCRIPCION</th>
+        <th>FECHA Y HORA</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="evento : ${tramite.eventos}">
+        <td th:text="${evento.id}"></td>
+        <td th:text="${evento.usuario}"></td>
+        <td th:text="${evento.departamento}"></td>
+        <td th:text="${evento.tipo}"></td>
+        <td th:text="${evento.descripcion}"></td>
+        <td th:text="${evento.fechaHora}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<button onclick="window.print()">Imprimir</button>
+<script>
+    document.getElementById('backButton').addEventListener('click', function() {
+        history.back();
+        setTimeout(function() {
+            location.reload();
+        }, 100);
+    });
+</script>
+</body>
+</html>

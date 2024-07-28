@@ -22,9 +22,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<Usuario> optionalUsuario  = usuarioRepository.findByEmail(email);
-        Usuario usuario = optionalUsuario.orElseThrow(() -> new UsernameNotFoundException
-                ("Usuario no encontrado con email: " + email));
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+        Usuario usuario = optionalUsuario.orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con email: " + email));
+
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + usuario.getRol());
 
         return new CustomUserDetails(
                 usuario.getEmail(),
@@ -38,7 +39,11 @@ public class CustomUserDetailsService implements UserDetailsService {
                 usuario.getParroquia(),
                 usuario.getEmail(),
                 usuario.getTelefono(),
-                Collections.singletonList(new SimpleGrantedAuthority("USER"))
+                usuario.getRol(),
+                usuario.getDepartamento(),
+                Collections.singletonList(authority)
         );
     }
 }
+
+

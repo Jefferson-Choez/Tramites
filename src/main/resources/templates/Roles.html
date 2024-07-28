@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignar Roles</title>
+    <link rel="stylesheet" th:href="@{/css/estilos-panel.css}" type="text/css">
+</head>
+<body>
+<div class="header">
+    <div class="company-text">
+        Empresa Municipal de Agua Potable y Alcantarillado del Cantón Pedro Carbo - Empresa Pública<br>
+    </div>
+    <div class="user-info">
+        <span id="userDropdown">Bienvenido, <span th:text="${username}">Nombre de Usuario</span></span>
+        <a href="/logout" class="logout-button">Cerrar sesión</a>
+        <div id="userMenu" class="dropdown-content" style="display:none;">
+            <a href="/Actualizar-datos">Actualizar Datos</a>
+            <a href="/RestPass">Cambiar Contraseña</a>
+            <a href="/Roles">Modificar Roles</a>
+        </div>
+        <script>
+            document.getElementById('userDropdown').addEventListener('mouseenter', function() {
+                document.getElementById('userMenu').style.display = 'block';
+            });
+            document.querySelector('.user-info').addEventListener('mouseleave', function() {
+                document.getElementById('userMenu').style.display = 'none';
+            });
+        </script>
+    </div>
+</div>
+<br>
+<button class="logout-button" onclick="history.back()">Regresar</button>
+<br>
+<h3>Gestionar Roles</h3>
+
+<div class="tramite-form-container">
+    <form th:action="@{/buscarUsuario}" method="get" class="search-form">
+        <label for="search">Buscar por número de cédula:</label>
+        <div class="search-group">
+            <input type="text" id="search" name="search" placeholder="Ingrese número de cédula">
+            <button type="submit">Buscar</button>
+        </div>
+    </form>
+
+    <div th:if="${usuario != null}">
+        <div class="user-details">
+            <p><strong>Nombres:</strong> <span th:text="${usuario.primerNombre} + ' ' + ${usuario.segundoNombre}">Nombres del Usuario</span></p>
+            <p><strong>Apellidos:</strong> <span th:text="${usuario.primerApellido} + ' ' + ${usuario.segundoApellido}">Apellidos del Usuario</span></p>
+            <p><strong>Correo electrónico:</strong> <span th:text="${usuario.email}">Correo del Usuario</span></p>
+            <p><strong>Cédula:</strong> <span th:text="${usuario.cedula}">Cédula del Usuario</span></p>
+            <form th:action="@{/asignarRol}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <input type="hidden" name="usuarioId" th:value="${usuario.id}" />
+                <label for="rol">Rol:</label>
+                <select id="rol" name="rol" th:value="${usuario.rol}">
+                    <option value="Usuario">SELECCIONAR</option>
+                    <option value="USER" th:selected="${usuario.rol == 'USER'}">USER</option>
+                    <option value="Admin1" th:selected="${usuario.rol == 'ADMIN1'}">ADMIN1</option>
+                    <option value="Admin2" th:selected="${usuario.rol == 'ADMIN2'}">ADMIN2</option>
+                </select>
+                <label for="departamento">Departamento:</label>
+                <select id="departamento" name="departamento" th:value="${usuario.departamento}">
+                    <option value="Gerencia General" th:selected="${usuario.departamento == 'Gerencia General'}">GERENCIA GENERAL</option>
+                    <option value="Caf" th:selected="${usuario.departamento == 'Caf'}">CAF</option>
+                    <option value="Csri" th:selected="${usuario.departamento == 'Csri'}">CSRI</option>
+                    <option value="Ctraya" th:selected="${usuario.departamento == 'Ctraya'}">CTRAYA</option>
+                    <option value="Jp" th:selected="${usuario.departamento == 'Jp'}">JP</option>
+                    <option value="Rentas" th:selected="${usuario.departamento == 'Rentas'}">RENTAS</option>
+                    <option value="Tesoreria" th:selected="${usuario.departamento == 'Tesoreria'}">TESORERIA</option>
+                </select>
+                <button type="submit" class="asignar-rol-button">Asignar Rol</button>
+            </form>
+        </div>
+    </div>
+    <div th:if="${success != null}" class="success-message" th:text="${success}"></div>
+    <div th:if="${error != null}" class="error-message" th:text="${error}"></div>
+</div>
+<script>
+    document.getElementById('backButton').addEventListener('click', function() {
+        history.back();
+        setTimeout(function() {
+            location.reload();
+        }, 100);
+    });
+</script>
+</body>
+</html>

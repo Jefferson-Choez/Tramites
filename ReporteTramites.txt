@@ -1,0 +1,4 @@
+Reporte de Trámites
+ID,Estado,Fecha de Creación,Tipo de Trámite,Subtipo de Trámite,Nombres y Apellidos,Cédula,Teléfono
+64,Registrado,2024-06-29,solicitudesVarias,cambioNombreServicio,Jefferson Armando Choez  Delgado,0928114891,0991896450
+66,Registrado,2024-06-29,solicitudesVarias,suspensionServicio,Jefferson Armando Choez  Delgado,0928114891,0991896450

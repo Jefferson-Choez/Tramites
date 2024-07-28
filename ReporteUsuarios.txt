@@ -1,0 +1,3 @@
+Reporte de Usuarios
+ID	Cédula	Nombres y apellidos	Email	Dirección	Parroquia	Teléfono
+109	0928114891	Jefferson Armando Choez Delgado	jeffersonarmando.jac@gmail.com	pedro carbo	PedroCarbo	0991896450

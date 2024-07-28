@@ -20,7 +20,6 @@
         </div>
     </div>
 </div>
-
 <script>
     document.getElementById('userDropdown').addEventListener('mouseenter', function() {
         document.getElementById('userMenu').style.display = 'block';
@@ -29,8 +28,12 @@
         document.getElementById('userMenu').style.display = 'none';
     });
 </script>
+<br>
+<button class="logout-button" onclick="history.back()">Regresar</button>
+<br>
 
 <h3>ACTUALIZACIÓN DE DATOS</h3>
+
 
 <div th:if="${mensaje}" style="color: green; text-align: center">
     <p th:text="${mensaje}"></p>
@@ -72,6 +75,14 @@
         <input type="submit" value="Actualizar">
     </div>
 </form>
+<script>
+    document.getElementById('backButton').addEventListener('click', function() {
+        history.back();
+        setTimeout(function() {
+            location.reload();
+        }, 100);
+    });
+</script>
 <footer>
     <p>&copy; 2024 Empresa Municipal de Agua Potable y Alcantarillado.</p>
 </footer>

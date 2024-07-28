@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{login.notification.subject}">Notificación de Inicio de Sesión</title>
+</head>
+<body>
+<p>Hola <span th:text="${name}">Nombre</span>,</p>
+<p th:text="#{login.notification.body}"></p>
+<p>Gracias por usar la APP de gestión de trámites de la EMAPAPC-EP</p>
+<p>(Las tildes han sido omitidas intencionalmente para evitar problemas de lectura).</p>
+</body>
+</html>
+

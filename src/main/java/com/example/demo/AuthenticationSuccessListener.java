@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
@@ -12,14 +13,11 @@ public class AuthenticationSuccessListener implements ApplicationListener<Authen
 
     private final EmailService emailService;
     private final UsuarioRepository usuarioRepository;
-    private final UserService userService;
 
     @Autowired
-    public AuthenticationSuccessListener(EmailService emailService, UsuarioRepository usuarioRepository,
-                                         UserService userService) {
+    public AuthenticationSuccessListener(EmailService emailService, UsuarioRepository usuarioRepository) {
         this.emailService = emailService;
         this.usuarioRepository = usuarioRepository;
-        this.userService = userService;
     }
 
     @Override
@@ -29,6 +27,10 @@ public class AuthenticationSuccessListener implements ApplicationListener<Authen
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con email: " + email));
 
-        emailService.sendLoginNotificationEmail(usuario);
+        try {
+            emailService.sendLoginNotificationEmail(usuario);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

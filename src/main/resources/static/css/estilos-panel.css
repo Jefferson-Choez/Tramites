@@ -4,23 +4,30 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    overflow-y: auto;
 }
 
 .header {
     background-color: #1e3763;
     color: white;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.header .company-text {
+    text-align: center;
 }
 
 .user-info {
-    right: 20px;
     display: flex;
-    margin-left: auto;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    margin-top: 10px;
+    white-space: nowrap;
 }
 
 .logout-button {
@@ -31,7 +38,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .logout-button:hover {
@@ -55,16 +62,10 @@ h3 {
 .container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     padding: 20px;
-    flex-grow: 1;
     max-width: 1000px;
     margin: 20px auto;
-}
-.container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 10px;
 }
 
 .card {
@@ -79,7 +80,7 @@ h3 {
 .actualization-form {
     max-width: 500px;
     margin: 0 auto;
-    display: -webkit-flex;
+    display: flex;
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
@@ -96,11 +97,6 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-}
-
-.user-info {
-    position: relative;
-    display: inline-block;
 }
 
 .column {
@@ -148,7 +144,8 @@ footer {
 .dropdown-content a:hover {
     background-color: #f8f8f8;
 }
-input[type="submit"] {
+
+input[type="submit"], .asignar-rol-button {
     background-color: #1e3763;
     color: white;
     padding: 10px 20px;
@@ -158,11 +155,17 @@ input[type="submit"] {
     margin-top: 20px;
 }
 
+input[type="submit"]:hover, .asignar-rol-button:hover {
+    background-color: #0056b3;
+}
+
 .service-container {
     display: flex;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: center;
     text-align: center;
     margin-top: 20px;
+    gap: 20px;
 }
 
 .service-item {
@@ -189,6 +192,59 @@ input[type="submit"] {
     text-decoration: underline;
 }
 
+@media (max-width: 768px) {
+    .header {
+        padding: 10px;
+    }
+
+    .user-info {
+        flex-direction: column;
+    }
+
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .service-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .service-item {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 5px;
+    }
+
+    .user-info {
+        font-size: 12px;
+    }
+
+    .logout-button {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+
+    .service-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .service-item {
+        max-width: 150px;
+    }
+}
+
 footer {
     background-color: #f2f2f2;
     text-align: center;
@@ -198,4 +254,311 @@ footer {
     width: 100%;
 }
 
+.tramite-form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
 
+.tramite-form-container label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.tramite-form-container select,
+.tramite-form-container textarea,
+.tramite-form-container input[type="file"],
+.tramite-form-container input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.tramite-form-container input[type="submit"] {
+    background-color: #1e3763;
+    color: white;
+    cursor: pointer;
+}
+
+.tramite-form-container textarea {
+    height: auto;
+}
+
+.tabla-tramites {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+}
+
+.tabla-tramites th, .tabla-tramites td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.tabla-tramites th {
+    background-color: #f4f4f4;
+}
+
+.tabla-tramites tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.tabla-tramites tr:hover {
+    background-color: #f1f1f1;
+}
+
+.tabla-container {
+    display: flex;
+    justify-content: center;
+}
+
+.search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.search-group {
+    display: flex;
+    gap: 10px;
+}
+
+.search-group input {
+    flex: 1;
+}
+
+.search-group button {
+    background-color: #1e3763;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-group button:hover {
+    background-color: #003366;
+}
+
+.user-details {
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+.user-details p {
+    margin: 10px 0;
+}
+
+.filtro-tramites {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.tabla-tramites {
+    width: 100%;
+}
+
+.detalle-tramite-container {
+    margin: 20px;
+}
+
+.detalle-tramite-table {
+    width: 50%;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+.detalle-tramite-table th, .detalle-tramite-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.form-inline {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.form-inline label, .form-inline select, .form-inline button {
+    margin-right: 10px;
+}
+
+.form-inline button {
+    margin-left: 10px;
+}
+
+.form-container {
+    width: 50%;
+    margin: auto;
+}
+
+.comentario-textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.comentario-button {
+    background-color: #1e3763;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.comentario-button:hover {
+    background-color: #0056b3;
+}
+
+.back-button {
+    background-color: #1e3763;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 20px 0;
+    display: inline-block;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
+
+.table {
+    width: 100%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #d3d3d3;
+    color: #1e3763;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+.table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    text-align: left;
+}
+
+.table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+button, .asignar-rol-button, .logout-button {
+    background-color: #1e3763;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+button:hover, .asignar-rol-button:hover, .logout-button:hover {
+    background-color: #0056b3;
+}
+
+textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.reporte-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 80vh;
+}
+
+.reporte-card {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.reporte-card form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reporte-card label, .reporte-card select, .reporte-card input {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.reporte-card .asignar-rol-button {
+    width: 100%;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.reporte-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.reporte-card h2 {
+    text-align: center;
+}

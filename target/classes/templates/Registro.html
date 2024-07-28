@@ -16,9 +16,6 @@
 
 <div th:if="${error}" th:text="${error}" class="error-message" style="color: red; font-size: 16px; text-align: center"></div>
 <form th:action="@{/Registro}" th:object="${usuario}" method="post" id="form" class="registration-form">
-    <div th:if="${error != null}" class="error-message">
-        <p th:text="${error}"></p>
-    </div>
     <div class="column">
         <label for="primerNombre">Primer Nombre:</label>
         <input type="text" id="primerNombre" th:field="*{primerNombre}" required>

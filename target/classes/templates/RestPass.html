@@ -12,7 +12,10 @@
         Empresa Municipal de Agua Potable y Alcantarillado del Cantón Pedro Carbo - Empresa Pública<br>
     </div>
     </div>
+    <br>
+    <br>
     <h3>Restablecer de contraseña</h3>
+    <br>
     <div th:if="${successMessage}" th:text="${successMessage}" class="alert alert-success" style="color: red; font-size: 16px; text-align: center"></div>
     <div th:if="${message}" th:text="${message}" class="alert alert-success" style="color: red; font-size: 16px; text-align: center"></div>
     <form th:action="@{/RestPass}" method="post" id="form" class="login-form">

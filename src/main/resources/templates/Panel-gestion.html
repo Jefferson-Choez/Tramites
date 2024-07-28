@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Usuario</title>
+    <link rel="stylesheet" th:href="@{/css/estilos-panel.css}" type="text/css">
+</head>
+<body>
+<div class="header">
+    <div class="company-text">
+        Empresa Municipal de Agua Potable y Alcantarillado del Cantón Pedro Carbo - Empresa Pública<br>
+    </div>
+    <div class="user-info">
+        <span id="userDropdown">Bienvenido, <span th:text="${username}">Nombre de Usuario</span></span>
+        <a th:href="@{/logout}" class="logout-button">Cerrar sesión</a>
+        <div id="userMenu" class="dropdown-content" style="display:none;">
+            <a href="/Actualizar-datos">Actualizar Datos</a>
+            <a href="/RestPass">Cambiar Contraseña</a>
+        </div>
+        <script>
+            document.getElementById('userDropdown').addEventListener('mouseenter', function() {
+                document.getElementById('userMenu').style.display = 'block';
+            });
+            document.querySelector('.user-info').addEventListener('mouseleave', function() {
+                document.getElementById('userMenu').style.display = 'none';
+            });
+        </script>
+    </div>
+</div>
+<br>
+<br>
+<h1>Servicios Generales</h1>
+<br>
+<div class="service-container">
+    <div class="service-item">
+        <a th:href="@{/NuevoTramite}">
+            <img th:src="@{/imagenes/Registro.png}" alt="Nuevo-tramite">
+            <span>REGISTRAR TRAMITES</span>
+        </a>
+    </div>
+    <div class="service-item">
+        <a th:href="@{/GestionarTramitesAdmin1}">
+            <img th:src="@{/imagenes/Seguimiento.png}" alt="Lista-tramites">
+            <span>GESTIONAR DE TRAMITES</span>
+        </a>
+    </div>
+    <div class="service-item">
+        <a th:href="@{/Reportes.html}">
+            <img th:src="@{/imagenes/Consulta.png}" alt="Consulta-planillas">
+            <span>CONSULTAS / REPORTES</span>
+        </a>
+    </div>
+</div>
+<footer>
+    <p>&copy; 2024 Empresa Municipal de Agua Potable y Alcantarillado.</p>
+</footer>
+</body>
+</html>
